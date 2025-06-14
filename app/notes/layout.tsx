@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
-import { createClient as createBrowserClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
 import SidebarLayout from "@/components/sidebar-layout";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -26,11 +26,25 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = createBrowserClient();
-  const { data: notes } = await supabase
-    .from("notes")
-    .select("*")
-    .eq("public", true);
+  let notes = [];
+  
+  try {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from("notes")
+      .select("*")
+      .eq("public", true);
+    
+    if (error) {
+      console.error("Supabase error:", error);
+      notes = [];
+    } else {
+      notes = data || [];
+    }
+  } catch (error) {
+    console.log("Supabase connection error:", error);
+    notes = [];
+  }
 
   return (
     <html lang="en" suppressHydrationWarning>

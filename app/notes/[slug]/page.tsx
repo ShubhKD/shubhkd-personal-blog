@@ -1,5 +1,5 @@
 import Note from "@/components/note";
-import { createClient as createBrowserClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import { Note as NoteType } from "@/lib/types";
@@ -9,15 +9,9 @@ export const revalidate = 60 * 60; // 1 hour
 
 // Dynamically determine if this is a user note
 export async function generateStaticParams() {
-  const supabase = createBrowserClient();
-  const { data: posts } = await supabase
-    .from("notes")
-    .select("slug")
-    .eq("public", true);
-
-  return posts!.map(({ slug }) => ({
-    slug,
-  }));
+  // Return empty array to enable dynamic routing
+  // Static generation will happen on-demand
+  return [];
 }
 
 // Use dynamic rendering for non-public notes
@@ -28,7 +22,7 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const supabase = createBrowserClient();
+  const supabase = createClient();
   const slug = params.slug.replace(/^notes\//, '');
 
   const { data: note } = await supabase.rpc("select_note", {
@@ -39,7 +33,7 @@ export async function generateMetadata({
   const emoji = note?.emoji || "👋🏼";
 
   return {
-    title: `alana goyal | ${title}`,
+    title: `Shubh KD | ${title}`,
     openGraph: {
       images: [
         `/notes/api/og/?title=${encodeURIComponent(title)}&emoji=${encodeURIComponent(
@@ -55,7 +49,7 @@ export default async function NotePage({
 }: {
   params: { slug: string };
 }) {
-  const supabase = createBrowserClient();
+  const supabase = createClient();
   const slug = params.slug.replace(/^notes\//, '');
 
   const { data: note } = await supabase.rpc("select_note", {
