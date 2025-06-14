@@ -1,36 +1,89 @@
-# [notes](https://alanagoyal.com/notes)
+# Shubh KD - Personal Blog
 
-i'm obsessed with re-creating apple products. this one is a notes-inspired website that doubles as my personal website.
+A minimalist personal blog platform built with Next.js 14, TypeScript, Tailwind CSS, and Supabase.
 
-## clone the repo
+## 🚀 Features
 
-`git clone https://github.com/alanagoyal/alanagoyal`
+- **Clean, minimal design** with excellent typography
+- **Dark mode** support with system preference detection
+- **Markdown support** with syntax highlighting
+- **Search functionality** across all posts
+- **Public/private notes** system
+- **Mobile-responsive** design
+- **SEO optimized** with dynamic meta tags
+- **Fast loading** with Next.js optimization
 
-## set up the database
+## 🛠️ Tech Stack
 
-this project uses [supabase](https://supabase.com) as a backend. to set up the database, create a [new project](https://database.new), enter your project details, and wait for the database to launch. navigate to the sql editor in the dashboard, paste the sql from the [migration file](https://github.com/alanagoyal/alanagoyal/blob/main/supabase/migrations) into the sql editor and press run. you can also use the supabase cli to do this locally.
+- **Framework**: Next.js 14 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Supabase Auth
+- **Deployment**: Vercel
+- **Analytics**: Vercel Analytics
 
-grab the project url and anon key from the api settings and put them in a new `.env.local` file in the root directory as shown:
+## 🏃‍♂️ Getting Started
 
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/shubhkd-personal-blog.git
+cd shubhkd-personal-blog
 ```
-NEXT_PUBLIC_SUPABASE_URL="<your-supabase-url>"
-NEXT_PUBLIC_SUPABASE_ANON_KEY="<your-anon-key>"
+
+2. Install dependencies:
+```bash
+npm install
 ```
 
-## install dependencies
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+```
 
-`npm install`
+4. Add your Supabase credentials to `.env.local`:
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-## run the app
+5. Set up the database:
+- Run the SQL commands in `setup-database.sql` in your Supabase SQL editor
 
-run the application in the command line and it will be available at http://localhost:3000.
+6. Start the development server:
+```bash
+npm run dev
+```
 
-`npm run dev`
+## 📝 Adding Content
 
-## deploy
+Currently, you can add new blog posts by inserting them directly into your Supabase database:
 
-deploy using [vercel](https://vercel.com)
+```sql
+INSERT INTO notes (title, content, public, slug, category, emoji) 
+VALUES (
+  'Your Post Title',
+  '# Your Post Title\n\nYour markdown content here...',
+  true,
+  'your-post-slug',
+  'category',
+  '✨'
+);
+```
 
-## license
+## 🌐 Deployment
 
-licensed under the [mit license](https://github.com/alanagoyal/alanagoyal/blob/main/LICENSE.md).
+This blog is optimized for deployment on Vercel:
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy!
+
+## 📄 License
+
+MIT License - feel free to use this for your own personal blog!
+
+## 🙏 Acknowledgments
+
+Inspired by [Alana Goyal's](https://alanagoyal.com) beautiful blog design.
