@@ -157,7 +157,7 @@
 
 .markdown-body a {
   color: #fcb828;
-  text-decoration: none;
+  text-decoration: underline;
   font-weight: 500;
   background-color: rgba(252, 184, 40, 0.1);
   padding: 2px 4px;
@@ -166,7 +166,7 @@
 }
 
 .markdown-body a:hover {
-  text-decoration: none;
+  text-decoration: underline;
   background-color: rgba(252, 184, 40, 0.2);
   transform: translateY(-1px);
 }
