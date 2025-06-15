@@ -156,7 +156,7 @@
 }
 
 .markdown-body a {
-  color: #007AFF;
+  color: #FF9500;
   text-decoration: none;
   font-weight: 400;
 }
@@ -167,7 +167,7 @@
 }
 
 .dark .markdown-body a {
-  color: #0A84FF;
+  color: #FF9F0A;
 }
 
 .markdown-body ul,
@@ -176,12 +176,29 @@
   padding-left: 2em;
 }
 
+.markdown-body ul {
+  list-style-type: disc;
+}
+
+.markdown-body ol {
+  list-style-type: decimal;
+}
+
 .markdown-body li {
   margin-bottom: 0.25em;
+  display: list-item;
 }
 
 .markdown-body li > p {
   margin-bottom: 0;
+}
+
+.markdown-body ul ul {
+  list-style-type: circle;
+}
+
+.markdown-body ul ul ul {
+  list-style-type: square;
 }
 
 .markdown-body blockquote {
