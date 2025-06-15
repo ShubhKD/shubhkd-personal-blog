@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import SidebarLayout from "@/components/sidebar-layout";
+import SidebarLayoutDebug from "@/components/sidebar-layout-debug";
 
 export const revalidate = 0;
 
@@ -33,8 +33,8 @@ export default async function NotesLayout({
   }
 
   return (
-    <SidebarLayout notes={notes}>
+    <SidebarLayoutDebug notes={notes}>
       {children}
-    </SidebarLayout>
+    </SidebarLayoutDebug>
   );
 }
