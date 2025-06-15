@@ -6,7 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useMobileDetect } from "./mobile-detector";
 import { useRouter, usePathname } from "next/navigation";
 import { SessionNotesProvider } from "@/app/notes/session-notes";
-import SidebarWorking from "./sidebar-working";
+import SidebarAlanaReplica from "./sidebar-alana-replica";
 
 interface SidebarLayoutProps {
   children: React.ReactNode;
@@ -38,7 +38,7 @@ export default function SidebarLayout({ children, notes }: SidebarLayoutProps) {
     <SessionNotesProvider>
       <div className="dark:text-white h-dvh flex">
         {showSidebar && (
-          <SidebarWorking
+          <SidebarAlanaReplica
             notes={notes}
             onNoteSelect={isMobile ? handleNoteSelect : () => {}}
             isMobile={isMobile}
