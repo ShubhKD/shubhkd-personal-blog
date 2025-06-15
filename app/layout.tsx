@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "@/components/theme-provider";
-import "./notes/globals.css";
+import "./globals.css";
 
 const fontSans = FontSans({
   subsets: ["latin"],
