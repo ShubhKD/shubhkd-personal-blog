@@ -96,12 +96,35 @@ export default function SidebarAppleNotes({
   };
 
   const getContentPreview = (note: any) => {
-    if (note.content) {
-      // Remove markdown and get first 60 characters
-      const plainText = note.content.replace(/[#*`_~]/g, '').trim();
-      return plainText.length > 60 ? plainText.substring(0, 60) + '...' : plainText;
+    if (note.content && note.content.trim()) {
+      // Remove markdown formatting and clean up text
+      let plainText = note.content
+        .replace(/[#*`_~\[\]]/g, '') // Remove markdown characters
+        .replace(/\n+/g, ' ') // Replace newlines with spaces
+        .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+        .trim();
+      
+      // If content is very short, return as is
+      if (plainText.length <= 50) {
+        return plainText;
+      }
+      
+      // Find a good breaking point (end of sentence or word)
+      const truncated = plainText.substring(0, 50);
+      const lastSpace = truncated.lastIndexOf(' ');
+      const lastPeriod = truncated.lastIndexOf('.');
+      
+      if (lastPeriod > 30) {
+        return plainText.substring(0, lastPeriod + 1);
+      } else if (lastSpace > 30) {
+        return plainText.substring(0, lastSpace) + '...';
+      } else {
+        return truncated + '...';
+      }
     }
-    return 'No additional text';
+    
+    // Return empty string instead of "No additional text" for cleaner look
+    return '';
   };
 
   const renderNoteItem = (note: any) => {
@@ -113,23 +136,23 @@ export default function SidebarAppleNotes({
         onClick={() => handleNoteSelect(note)}
         className={`w-full text-left p-3 rounded-lg transition-all duration-200 group ${
           isSelected
-            ? "bg-yellow-50 border border-yellow-200"
+            ? "border border-transparent"
             : "hover:bg-gray-50 border border-transparent"
         }`}
+        style={isSelected ? { backgroundColor: '#ffe391' } : {}}
       >
         <div className="space-y-1">
-          <div className="flex items-start justify-between">
+          <div>
             <h3 className={`font-medium text-sm leading-tight ${
               isSelected ? "text-gray-900" : "text-gray-800"
             }`}>
               {note.title}
             </h3>
-            <span className="text-xs text-gray-500 ml-2 flex-shrink-0">
-              {formatDate(note.created_at)}
-            </span>
           </div>
           <div className="flex items-start gap-2">
-            <span className="text-xs text-gray-600 mt-0.5">{note.emoji}</span>
+            <span className="text-xs text-gray-500 flex-shrink-0">
+              {formatDate(note.created_at)}
+            </span>
             <p className="text-xs text-gray-600 leading-relaxed">
               {getContentPreview(note)}
             </p>
