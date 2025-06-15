@@ -158,16 +158,26 @@
 .markdown-body a {
   color: #fcb828;
   text-decoration: none;
-  font-weight: 400;
+  font-weight: 500;
+  background-color: rgba(252, 184, 40, 0.1);
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
 .markdown-body a:hover {
-  text-decoration: underline;
-  opacity: 0.8;
+  text-decoration: none;
+  background-color: rgba(252, 184, 40, 0.2);
+  transform: translateY(-1px);
 }
 
 .dark .markdown-body a {
   color: #fcb828;
+  background-color: rgba(252, 184, 40, 0.15);
+}
+
+.dark .markdown-body a:hover {
+  background-color: rgba(252, 184, 40, 0.25);
 }
 
 .markdown-body ul,

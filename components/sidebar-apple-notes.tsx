@@ -192,6 +192,15 @@ export default function SidebarAppleNotes({
 
   return (
     <div className="w-[340px] h-screen bg-white border-r border-gray-200 flex flex-col">
+      {/* Mac Traffic Light Dots */}
+      <div className="flex items-center justify-start px-4 py-3 border-b border-gray-100">
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors cursor-pointer"></div>
+          <div className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors cursor-pointer"></div>
+          <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors cursor-pointer"></div>
+        </div>
+      </div>
+      
       {/* Search Bar */}
       <div className="p-4 border-b border-gray-100">
         <div className="relative">
