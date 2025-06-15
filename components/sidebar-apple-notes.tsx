@@ -97,33 +97,40 @@ export default function SidebarAppleNotes({
 
   const getContentPreview = (note: any) => {
     if (note.content && note.content.trim()) {
-      // Remove markdown formatting and clean up text
+      // Remove markdown headers and formatting, but preserve text
       let plainText = note.content
-        .replace(/[#*`_~\[\]]/g, '') // Remove markdown characters
+        .replace(/^#+\s*/gm, '') // Remove markdown headers (# ## ###)
+        .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold formatting but keep text
+        .replace(/\*(.*?)\*/g, '$1') // Remove italic formatting but keep text
+        .replace(/`(.*?)`/g, '$1') // Remove code formatting but keep text
+        .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Remove links but keep link text
         .replace(/\n+/g, ' ') // Replace newlines with spaces
         .replace(/\s+/g, ' ') // Replace multiple spaces with single space
         .trim();
       
       // If content is very short, return as is
-      if (plainText.length <= 50) {
+      if (plainText.length <= 60) {
         return plainText;
       }
       
       // Find a good breaking point (end of sentence or word)
-      const truncated = plainText.substring(0, 50);
+      const truncated = plainText.substring(0, 60);
       const lastSpace = truncated.lastIndexOf(' ');
       const lastPeriod = truncated.lastIndexOf('.');
+      const lastComma = truncated.lastIndexOf(',');
       
-      if (lastPeriod > 30) {
+      if (lastPeriod > 40) {
         return plainText.substring(0, lastPeriod + 1);
-      } else if (lastSpace > 30) {
+      } else if (lastComma > 40) {
+        return plainText.substring(0, lastComma + 1) + '..';
+      } else if (lastSpace > 40) {
         return plainText.substring(0, lastSpace) + '...';
       } else {
         return truncated + '...';
       }
     }
     
-    // Return empty string instead of "No additional text" for cleaner look
+    // Return empty string for cleaner look when no content
     return '';
   };
 
@@ -146,7 +153,7 @@ export default function SidebarAppleNotes({
             <h3 className={`font-medium text-sm leading-tight ${
               isSelected ? "text-gray-900" : "text-gray-800"
             }`}>
-              {note.title}
+              {note.emoji} {note.title}
             </h3>
           </div>
           <div className="flex items-start gap-2">
